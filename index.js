@@ -1,4 +1,4 @@
-var cronConverter = require('cron-converter')
+var CronConverter = require('cron-converter')
 var moment = require('moment-timezone')
 var ms = require('pretty-ms')
 var Promise = require('any-promise')
@@ -8,10 +8,14 @@ var debug = function () {}
  * Starts a cronjob.
  */
 
-var cron = function (options, fn) {
+function cron (options, fn) {
   var crontime, timezone, name, started, timer
   init()
   return { stop: stop, run: run, next: next }
+
+  /*
+   * Constructor.
+   */
 
   function init () {
     if (!options || !options.on) {
@@ -22,13 +26,17 @@ var cron = function (options, fn) {
       throw new Error('cron-scheduler: expected function')
     }
 
-    crontime = new cronConverter()
+    crontime = new CronConverter()
     crontime.fromString(options.on)
     timezone = options.timezone
     name = options.name || fn.name || options.on
     started = true
     schedule()
   }
+
+  /*
+   * Sets a timer to run the next iteration.
+   */
 
   function schedule () {
     var future = next()
@@ -40,6 +48,10 @@ var cron = function (options, fn) {
     if (timer) clearTimeout(timer)
     timer = setTimeout(run, delta)
   }
+
+  /*
+   * Returns the next scheduled iteration as a Moment date.
+   */
 
   function next () {
     // get the time to check for. cron-converter needs an
@@ -55,21 +67,29 @@ var cron = function (options, fn) {
     return date
   }
 
+  /*
+   * Runs an iteration.
+   */
+
   function run () {
     debug(name + ': starting')
     var start = new Date()
     Promise.resolve(fn())
       .then(function () {
-        var elapsed = +new Date() - start
-        debug(name + ': OK in ' + ms(elapsed))
+        debug(name + ': OK in ' + ms(elapsed()))
         if (started) schedule()
       })
       .catch(function (err) {
-        var elapsed = +new Date() - start
-        debug(name + ': FAILED in ' + ms(elapsed))
+        debug(name + ': FAILED in ' + ms(elapsed()))
         throw err
       })
+
+    function elapsed () { return +new Date() - start }
   }
+
+  /*
+   * ...in the name of love.
+   */
 
   function stop () {
     if (timer) {
