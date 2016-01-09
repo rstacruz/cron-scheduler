@@ -11,7 +11,7 @@ later, you should be fine. Otherwise, you'll also need to install
 
 [bluebird]: https://github.com/petkaantonov/bluebird
 [rsvp]: https://www.npmjs.com/package/rsvp
-[q]: https://github.com/kriskowal/q
+[q.js]: https://github.com/kriskowal/q
 [when]: https://github.com/cujojs/when
 
 ## cron()
