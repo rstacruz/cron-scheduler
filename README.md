@@ -20,6 +20,8 @@ later, you should be fine. Otherwise, you'll also need to install
 Starts a cronjob.
 
 ```js
+var cron = require('cron-scheduler')
+
 cron({ on: '0 9 * * *' }, function () {
   console.log('this will run every 9:00am')
 })
