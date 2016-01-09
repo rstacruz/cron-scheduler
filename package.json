@@ -1,13 +1,11 @@
 {
   "name": "cron-scheduler",
+  "description": "Runs jobs in periodic intervals",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rstacruz/cron-scheduler/issues"
+  },
   "dependencies": {
     "any-promise": "0.1.0",
     "cron-converter": "0.0.8",
@@ -16,5 +14,21 @@
   },
   "devDependencies": {
     "tape": "4.4.0"
+  },
+  "homepage": "https://github.com/rstacruz/cron-scheduler#readme",
+  "keywords": [
+    "cron",
+    "cronjob",
+    "crontab",
+    "schedule"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rstacruz/cron-scheduler.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

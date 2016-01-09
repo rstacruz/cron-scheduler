@@ -1,8 +1,20 @@
 # cron-scheduler
 
-Runs jobs.
+> Runs jobs in periodic intervals
 
-### cron()
+cron-scheduler is a way to run functions at specific times of the day. It runs
+in Node.js as well as the browser.
+
+It requires a Promise implementation to work. If you're on Node.js v4 or
+later, you should be fine. Otherwise, you'll also need to install
+[bluebird][], [rsvp][], [when][], or [q.js][].
+
+[bluebird]: https://github.com/petkaantonov/bluebird
+[rsvp]: https://www.npmjs.com/package/rsvp
+[q]: https://github.com/kriskowal/q
+[when]: https://github.com/cujojs/when
+
+## cron()
 > `cron(options, function)`
 
 Starts a cronjob.
@@ -31,6 +43,9 @@ cron({
 })
 ```
 
+The `options.on` parameter is in cron standard format. Check the [cron
+cheatsheet](http://ricostacruz.com/cheatsheets/cron.html) for more details.
+
 Any errors will be thrown, and will stop the scheduler. If this is not
 what you want, you may wish to decorate the function being passed.
 
@@ -54,7 +69,21 @@ scheduling the next job. If the promise is rejected, it will be an unhandled
 rejection (!). You may use the same `trap()` decorator trick above to get
 around this.
 
-### cron.debug
+To stop the cronjob, just run the `stop` method returned by `cron()`.
+
+```js
+job = cron({ on: '0 12 * * *' }, work)
+job.stop()
+```
+
+To manually invoke the cronjob, run the `run` method returned  by `cron()`.
+
+```js
+job = cron({ on: '0 12 * * *' }, work)
+job.run()
+```
+
+## cron.debug
 
 > `cron.debug(function)`
 
@@ -64,7 +93,8 @@ Sets the debug function.
 cron.debug(console.log.bind(console))
 ```
 
-You can pass your custom logger here. For instance, you can use the [debug][] module for prettier messages.
+You can pass your custom logger here. For instance, you can use the [debug][]
+module for prettier messages.
 
 ```js
 cron.debug(require('debug')('cron'))
