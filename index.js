@@ -9,36 +9,50 @@ var debug = function () {}
  */
 
 var cron = function (options, fn) {
-  var crontime, timezone, name, started
+  var crontime, timezone, name, started, timer
   init()
-  return { stop, run }
+  return { stop: stop, run: run, next: next }
 
   function init () {
     if (!options || !options.on) {
       throw new Error('cron-scheduler: expected an options object with `on`')
     }
 
+    if (typeof fn !== 'function') {
+      throw new Error('cron-scheduler: expected function')
+    }
+
     crontime = new cronConverter()
     crontime.fromString(options.on)
     timezone = options.timezone
-    name = options.name || fn.name || cron.on
+    name = options.name || fn.name || options.on
     started = true
     schedule()
   }
 
   function schedule () {
+    var future = next()
+    var delta = Math.max(future.diff(moment()), 1000)
+
+    debug(name + ': next run in ' + ms(delta) +
+      ' at ' + future.format('llll Z'))
+
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(run, delta)
+  }
+
+  function next () {
+    // get the time to check for. cron-converter needs an
+    // extra minute so it doesn't schedule it in the past
     var now = moment()
     if (timezone) now = now.tz(timezone)
     now = now.add(1, 'minute')
 
+    // get the next date and cast it to the timezone.
+    // return it as a Moment object.
     var next = crontime.next(now)
-    var delta = Math.max(+next - new Date(), 1000)
-
-    var nextDate = timezone ? moment.tz(next, timezone) : moment(next)
-    debug(name + ': next run in ' + ms(delta) +
-      ' at ' + nextDate.format('llll Z'))
-
-    setTimeout(run, delta)
+    var date = timezone ? moment.tz(next, timezone) : moment(next)
+    return date
   }
 
   function run () {
@@ -58,6 +72,11 @@ var cron = function (options, fn) {
   }
 
   function stop () {
+    if (timer) {
+      clearTimeout(timer)
+      timer = undefined
+    }
+
     started = false
   }
 }
