@@ -7,7 +7,7 @@ in Node.js as well as the browser.
 
 It requires a Promise implementation to work. If you're on Node.js v4 or
 later, you should be fine. Otherwise, you'll also need to install
-[bluebird][], [rsvp][], [when][], or [q.js][].
+[bluebird], [rsvp], [when], or [q.js].
 
 [bluebird]: https://github.com/petkaantonov/bluebird
 [rsvp]: https://www.npmjs.com/package/rsvp
@@ -25,7 +25,8 @@ cron({ on: '0 9 * * *' }, function () {
 })
 ```
 
-You can pass more options.
+#### Options
+The `options` parameter is an object with these things:
 
 - `on` *(String, required)* - the schedule in cron format (`min hour day
   month day-of-week`).
@@ -43,9 +44,18 @@ cron({
 })
 ```
 
+#### Cron strings
 The `options.on` parameter is in cron standard format. Check the [cron
 cheatsheet](http://ricostacruz.com/cheatsheets/cron.html) for more details.
+Here are some examples:
 
+```
+0 9 * * *    - every 9:00AM
+0 12 * * 1   - every 12:00PM on mondays
+0 */2 * * *  - every 2 hours
+```
+
+#### Errors
 Any errors will be thrown, and will stop the scheduler. If this is not
 what you want, you may wish to decorate the function being passed.
 
@@ -64,11 +74,13 @@ function trap (fn) {
 }
 ```
 
+#### Promises
 If `function` returns a Promise, it will wait for it to finish before
 scheduling the next job. If the promise is rejected, it will be an unhandled
 rejection (!). You may use the same `trap()` decorator trick above to get
 around this.
 
+#### Stopping
 To stop the cronjob, just run the `stop` method returned by `cron()`.
 
 ```js
@@ -76,7 +88,9 @@ job = cron({ on: '0 12 * * *' }, work)
 job.stop()
 ```
 
+#### Manually starting
 To manually invoke the cronjob, run the `run` method returned  by `cron()`.
+This will not stop the next scheduled invocation.
 
 ```js
 job = cron({ on: '0 12 * * *' }, work)
