@@ -13,6 +13,8 @@
     "pretty-ms": "2.1.0"
   },
   "devDependencies": {
+    "sinon": "1.17.2",
+    "sinon-in-sandbox": "1.0.0",
     "tape": "4.4.0"
   },
   "homepage": "https://github.com/rstacruz/cron-scheduler#readme",
