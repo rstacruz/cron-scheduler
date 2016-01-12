@@ -7,9 +7,8 @@ in Node.js as well as the browser.
 
 It requires a Promise implementation to work. If you're on Node.js v4 or
 later, you should be fine. Otherwise, you'll also need to install
-[bluebird] (or [rsvp], [when], or [q.js]).
+[bluebird](https://github.com/petkaantonov/bluebird) (or [rsvp], [when], or [q.js]).
 
-[bluebird]: https://github.com/petkaantonov/bluebird
 [rsvp]: https://www.npmjs.com/package/rsvp
 [q.js]: https://github.com/kriskowal/q
 [when]: https://github.com/cujojs/when
