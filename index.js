@@ -2,6 +2,7 @@ var CronConverter = require('cron-converter')
 var moment = require('moment-timezone')
 var ms = require('pretty-ms')
 var Promise = require('any-promise')
+var lt = require('long-timeout')
 var debug = function () {}
 
 /*
@@ -45,8 +46,8 @@ function cron (options, fn) {
     debug(name + ': next run in ' + ms(delta) +
       ' at ' + future.format('llll Z'))
 
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(run, delta)
+    if (timer) lt.clearTimeout(timer)
+    timer = lt.setTimeout(run, delta)
   }
 
   /*

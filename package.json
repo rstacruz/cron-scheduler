@@ -9,6 +9,7 @@
   "dependencies": {
     "any-promise": "0.1.0",
     "cron-converter": "0.0.8",
+    "long-timeout": "^0.1.1",
     "moment-timezone": "0.5.0",
     "pretty-ms": "2.1.0"
   },

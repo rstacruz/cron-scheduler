@@ -18,6 +18,35 @@ test('cron', function (t) {
   })
 })
 
+test('cron with long delay', function (t) {
+  sandbox(function (sinon, clock) {
+    var clock = sinon.useFakeTimers()
+    t.ok(+new Date() === 0, 'sinon timers is working')
+
+    // HACK sinon timers do not implement the 2147483647ms limit, but we need it to make this test genuine
+    var oldSetTimeout = setTimeout
+    setTimeout = function(func, timeout) {
+      if (timeout < 1 || timeout > 2147483647) timeout = 1
+
+      return oldSetTimeout(func, timeout)
+    }
+
+    var cron = rerequire('./index')
+
+    // we architect it in a way to have about three months until the next execution
+    var called = false
+    var job = cron({ on: '0 1 31 3 *', timezone: 'GMT' }, function () {
+      t.fail('called')
+      called = true
+    })
+
+    clock.tick(3600 * 1000)
+    if (!called) t.pass('not called')
+    job.stop()
+    t.end()
+  })
+})
+
 test('cron timezones', function (t) {
   sandbox(function (sinon) {
     var clock = sinon.useFakeTimers()
