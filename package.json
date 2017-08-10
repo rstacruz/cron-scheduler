@@ -1,7 +1,7 @@
 {
   "name": "cron-scheduler",
   "description": "Runs jobs in periodic intervals",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "bugs": {
     "url": "https://github.com/rstacruz/cron-scheduler/issues"
