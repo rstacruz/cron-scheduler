@@ -10,7 +10,7 @@ var debug = function () {}
  */
 
 function cron (options, fn) {
-  var crontime, timezone, name, started, timer
+  var crontime, name, started, timer
   init()
   return { stop: stop, run: run, next: next }
 
@@ -27,9 +27,8 @@ function cron (options, fn) {
       throw new Error('cron-scheduler: expected function')
     }
 
-    crontime = new CronConverter()
+    crontime = new CronConverter(options)
     crontime.fromString(options.on)
-    timezone = options.timezone
     name = options.name || fn.name || options.on
     started = true
     schedule()
@@ -55,17 +54,7 @@ function cron (options, fn) {
    */
 
   function next () {
-    // get the time to check for. cron-converter needs an
-    // extra minute so it doesn't schedule it in the past
-    var now = moment()
-    if (timezone) now = now.tz(timezone)
-    now = now.add(1, 'minute')
-
-    // get the next date and cast it to the timezone.
-    // return it as a Moment object.
-    var next = crontime.next(now)
-    var date = timezone ? moment.tz(next, timezone) : moment(next)
-    return date
+    return crontime.schedule().next()
   }
 
   /*
