@@ -1,5 +1,7 @@
 # cron-scheduler
 
+_This is a mirror of [rstacruz/cron-scheduler](https://github.com/rstacruz/cron-scheduler) to get security updates in_
+
 > Runs jobs in periodic intervals
 
 cron-scheduler is a way to run functions at specific times of the day. It runs

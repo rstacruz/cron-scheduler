@@ -1,0 +1,68 @@
+Arguments: 
+  /home/jniles/.nvm/versions/node/v10.16.2/bin/node /usr/share/yarn/bin/yarn.js test
+
+PATH: 
+  /home/jniles/.local/bin:/usr/local/ec2/ec2-ami-tools-1.5.7/bin:/home/jniles/bin:/home/jniles/.nvm/versions/node/v10.16.2/bin:/home/jniles/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/jniles/.rvm/bin:/home/jniles/.yarn/bin/
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.16.2
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/jniles/code/cron-scheduler/package.json: Unexpected token } in JSON at position 897
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:304:30)
+      at /usr/share/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "@ima-worldhealth/cron-scheduler",
+    "description": "Runs jobs in periodic intervals",
+    "version": "1.2.1",
+    "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
+    "bugs": {
+      "url": "https://github.com/rstacruz/cron-scheduler/issues"
+    },
+    "dependencies": {
+      "any-promise": "^1.3.0",
+      "cron-converter": "^0.0.12",
+      "long-timeout": "^0.1.1",
+      "moment-timezone": "^0.5.26",
+      "pretty-ms": "^2.1.0"
+    },
+    "devDependencies": {
+      "sinon": "^1.17.7",
+      "sinon-in-sandbox": "1.0.0",
+      "tape": "^4.11.0"
+    },
+    "homepage": "https://github.com/rstacruz/cron-scheduler#readme",
+    "keywords": [
+      "cron",
+      "cronjob",
+      "crontab",
+      "schedule"
+    ],
+    "license": "MIT",
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rstacruz/cron-scheduler.git"
+    },
+    "scripts": {
+      "test": "node test.js"
+    },
+    "public" : true,
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
